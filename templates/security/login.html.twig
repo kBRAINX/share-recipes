@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+    <style>
+        .login-form-wrapper {
+            margin: 200px auto 2em auto;
+            max-width: 600px;
+            width: 95%;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            font-family: Arial, sans-serif;
+        }
+        .login-form-wrapper h2 {
+            text-align: center;
+            color: #ff6f61;
+            margin-bottom: 1em;
+        }
+        .login-form-wrapper h1 {
+            text-align: center;
+            color: #ff6f61;
+            font-size: 50px;
+            margin-bottom: 1em;
+            font-family: eufm10, serif;
+            font-weight: bold;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        form div {
+            margin-bottom: 15px;
+        }
+        form label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        form input[type="text"],
+        form input[type="password"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            width: 100%;
+        }
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+        }
+        .btn-primary {
+            background-color: #ff6f61;
+            color: #fff;
+            border: none;
+            padding: 15px 50px;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            flex: 1;
+            margin-right: 10px;
+        }
+        .btn-primary:hover {
+            background-color: #ff5733;
+        }
+        .alert {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+    </style>
+
+    <div class="login-form-wrapper">
+
+        <h1>Ringo</h1>
+        <h2>Please sign in</h2>
+        <form method="post">
+            {% if error %}
+                <div class="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+
+            {% if app.user %}
+                <div class="alert">
+                    You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                </div>
+            {% endif %}
+
+            <div>
+                <label for="inputUsername">Username</label>
+                <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" autocomplete="username" required autofocus>
+            </div>
+            <div>
+                <label for="inputPassword">Password</label>
+                <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+            </div>
+
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" name="_remember_me"> Remember me
+                </label>
+            </div>
+
+            <button class="btn btn-primary" type="submit">Sign in</button>
+        </form>
+    </div>
+{% endblock %}

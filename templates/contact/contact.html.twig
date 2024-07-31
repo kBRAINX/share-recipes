@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact Us{% endblock %}
+
+{% block body %}
+    <style>
+        .contact-form-wrapper {
+            margin: 150px auto 2rem auto;
+            max-width: 600px;
+            width: 95%;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            font-family: Arial, sans-serif;
+        }
+        .contact-form-wrapper h2 {
+            text-align: center;
+            color: #ff6f61;
+            margin-bottom: 1em;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        form div {
+            margin-bottom: 15px;
+        }
+        form label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        form input, form textarea {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            width: 100%;
+        }
+        form textarea {
+            height: 150px;
+        }
+        .btn-send {
+            background-color: #ff6f61;
+            color: #fff;
+            border: none;
+            padding: 15px 50px;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            margin: 15px 150px;
+        }
+        .btn-send:hover {
+            background-color: #ff5733;
+        }
+        .error-message {
+            color: red;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+    </style>
+
+    <div class="contact-form-wrapper">
+        <h2>Contact Us</h2>
+        {{ form_start(form) }}
+        <div>
+            {{ form_label(form.name) }}
+            {{ form_widget(form.name) }}
+            {{ form_errors(form.name) }}
+        </div>
+        <div>
+            {{ form_label(form.email) }}
+            {{ form_widget(form.email) }}
+            {{ form_errors(form.email) }}
+        </div>
+        <div>
+            {{ form_label(form.service) }}
+            {{ form_widget(form.service) }}
+            {{ form_errors(form.service) }}
+        </div>
+        <div>
+            {{ form_label(form.message) }}
+            {{ form_widget(form.message) }}
+            {{ form_errors(form.message) }}
+        </div>
+        <div>
+            {{ form_widget(form.send) }}
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

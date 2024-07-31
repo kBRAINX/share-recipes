@@ -1,0 +1,14 @@
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+        recipes:
+            uri_prefix: /images/recipes
+            upload_destination: '%kernel.project_dir%/public/images/recipes'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+
+        users:
+          uri_prefix: /images/users
+          upload_destination: '%kernel.project_dir%/public/images/users'
+          namer: Vich\UploaderBundle\Naming\SmartUniqueNamer

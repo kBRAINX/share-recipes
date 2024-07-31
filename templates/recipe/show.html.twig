@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recipe Details{% endblock %}
+
+{% block body %}
+    <style>
+        .recipe-wrapper {
+            margin: 80px auto 0 auto;
+            max-width: 800px;
+            width: 95%;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            font-family: Arial, sans-serif;
+        }
+        .recipe-wrapper h2 {
+            text-align: center;
+            color: #ff6f61;
+            margin-bottom: 1em;
+        }
+        .recipe-image {
+            display: block;
+            width: 100%;
+            height: auto; /* Maintient les proportions de l'image */
+            margin: 0;
+            border-radius: 10px;
+            object-fit: cover; /* Permet de remplir le conteneur sans déformation */
+            image-rendering: -webkit-crisp-edges; /* Optimisation pour les écrans haute résolution */
+            image-rendering: crisp-edges; /* Pour une meilleure netteté */
+        }
+        .recipe-details {
+            list-style: none;
+            padding: 0;
+            font-size: 16px;
+        }
+        .recipe-details li {
+            background: #f9f9f9;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+            color: #555;
+        }
+        .recipe-details li span {
+            font-weight: bold;
+            color: #333;
+        }
+        .recipe-details li.immutable {
+            color: #aaa;
+            font-style: italic;
+        }
+        .edit-link {
+            display: block;
+            margin: 20px 0 0 20px;
+        }
+        .back-link a {
+            text-decoration: none;
+            color: #ff6f61;
+            font-weight: bold;
+            font-size: 22px;
+            display: block;
+            margin-bottom: 20px;
+        }
+        .back-link a:hover {
+            text-decoration: underline;
+            color: #ff5733;
+        }
+    </style>
+
+    <div class="recipe-wrapper">
+        <h2>Recipe Details</h2>
+        <div class="back-link">
+            <a href="{{ path('recipe.index') }}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 12H5m7-7l-7 7 7 7"></path>
+                </svg>
+                Back
+            </a>
+        </div>
+        <img class="recipe-image" src="{{ recipe.thumbnail ? '/images/recipes/' ~ recipe.thumbnail : '/images/default.png' }}" alt="{{ recipe.title }}">
+        <ul class="recipe-details">
+            <li><span>Title:</span> {{ recipe.title }}</li>
+            <li><span>Slug:</span> {{ recipe.slug }}</li>
+            <li><span>Description:</span> {{ recipe.content }}</li>
+            <li class="immutable"><span>Created At:</span> {{ recipe.createdAt|date('Y-m-d H:i') }}</li>
+            <li class="immutable"><span>Updated At:</span> {{ recipe.updatedAt|date('Y-m-d H:i') }}</li>
+            <li><span>Duration:</span> {{ recipe.duration }} mins</li>
+        </ul>
+    </div>
+{% endblock %}

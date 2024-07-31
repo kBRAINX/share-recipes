@@ -1,0 +1,130 @@
+{% extends 'admin/admin.html.twig' %}
+
+{% block title %}Categories{% endblock %}
+
+{% block body %}
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 800px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .example-wrapper h1 {
+            text-align: center;
+            color: #ff6f61;
+        }
+        .example-wrapper ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .example-wrapper li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+            padding: 10px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .example-wrapper p {
+            text-decoration: none;
+            color: #ff6f61;
+            font-weight: bold;
+            display: block;
+        }
+        .example-wrapper a:not(.new-recipe-button) {
+            text-decoration: none;
+            color: #ff6f61;
+            font-weight: bold;
+            display: block;
+        }
+        .example-wrapper a:not(.new-recipe-button):hover {
+            text-decoration: underline;
+            color: #ff5733;
+        }
+        .recipe-details {
+            margin-top: 5px;
+            font-size: 14px;
+            color: #555;
+        }
+        .recipe-category {
+            margin-top: 5px;
+            font-size: 14px;
+            color: #007bff;
+            font-weight: bold;
+        }
+        .recipe-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .recipe-actions a {
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        .new-recipe-button {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            background-color: #ff6f61;
+            color: #fff;
+            border: none;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 18px;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .new-recipe-button:hover {
+            background-color: #ff5733;
+            color: black;
+        }
+        .icon {
+            width: 24px;
+            height: 24px;
+            fill: #ff6f61;
+        }
+        .icon:hover {
+            fill: #ff5733;
+        }
+    </style>
+
+    <div class="example-wrapper">
+        <h1>List of Categories! ✅</h1>
+        <a href="{{ path('admin.category.create') }}" class="new-recipe-button">New Recipe</a>
+        <ul>
+            {% for category in categories %}
+                <li>
+                    <div>
+                        <p>{{ category.category.getName }}</p>
+                        <div class="recipe-details">
+                            <span>Created At: {{ category.category.getCreatedAt|date('Y-m-d H:i') }}</span>
+                        </div>
+                        <div class="recipe-category">
+                            <span>Total Recipes: {{ category.total | default(0)}}</span>
+                        </div>
+                    </div>
+                    <div class="recipe-actions">
+                        <a href="{{ path('admin.category.edit', {id: category.category.getId}) }}">
+                            <svg class="icon" viewBox="0 0 24 24">
+                                <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zm2.92-2.92l7.06-7.06 1.75 1.75-7.06 7.06H5.92v-1.75H3v1.75h1.75v1.75h1.75v-1.75H8.42V15h-1.75v-1.75h-1.75v1.75h-1.75v-1.75H5.92v-1.75H3v1.75H5.92z"></path>
+                            </svg>
+                        </a>
+                        <a href="{{ path('admin.category.delete', {id: category.category.getId}) }}">
+                            <svg class="icon" viewBox="0 0 24 24">
+                                <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2-10h8v10H8V9zm7.5-5l-1-1h-5l-1 1H5v2h14V4h-3.5z"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </li>
+            {% else %}
+                <li>No Category found</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

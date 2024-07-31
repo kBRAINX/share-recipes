@@ -1,0 +1,137 @@
+{% extends 'admin/admin.html.twig' %}
+
+{% block title %}Home page{% endblock %}
+
+{% block body %}
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+        }
+        .hero, .content, .categories, .featured-recipes, .site-description, .contact-section {
+            margin: 20px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .hero {
+            background-color: #ffcccb;
+        }
+        .hero h1 {
+            text-align: center;
+            color: #ff6f61;
+            font-family: eufm10, serif;
+            font-weight: bold;
+        }
+        h2 {
+            font-size: 40px;
+            text-align: center;
+            font-family: serif;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+        .button, .view-more-button {
+            display: block;
+            width: fit-content;
+            margin: 20px auto;
+            padding: 15px 30px;
+            background-color: #ff6f61;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .button:hover, .view-more-button:hover {
+            background-color: #ff5733;
+        }
+        .categories ul, .featured-recipes .recipe-cards {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .categories ul li, .featured-recipes .recipe-card {
+            flex: 1;
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #f0f0f0;
+            border-radius: 10px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .recipe-card h3 a {
+            text-decoration: none;
+            color: #ff6f61;
+            font-weight: bold;
+            display: block;
+            margin: 0 0 10px 0;
+        }
+        .recipe-card .details {
+            font-size: 16px;
+            color: #555;
+        }
+        .contact-button {
+            display: block;
+            width: fit-content;
+            margin: 0 auto;
+            padding: 15px 30px;
+            background-color: #ff6f61;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .contact-button:hover {
+            background-color: #ff5733;
+        }
+        .site-description p{
+            font-size: 30px;
+            line-height: 1.5;
+            text-align: center;
+            padding: 40px;
+            margin: 20px auto;
+            max-width: 100%;
+        }
+    </style>
+
+    <section class="hero">
+        <h1>Welcome to Ringo Admin</h1>
+        <p>Your go-to place for amazing recipes.</p>
+        <a href="{{ path('admin.recipe.index') }}" class="button">Explore Recipes</a>
+        <p>Total duration of Recipe on this website is: <b>{{ total }} mins</b></p>
+    </section>
+
+    <section class="categories">
+        <h2>Recipe Categories</h2>
+        <ul>
+            {% for category in categories %}
+                <li>{{ category.getName }}</li>
+            {% endfor %}
+        </ul>
+        <a href="{{ path('admin.category.index') }}" class="view-more-button">View More</a>
+    </section>
+
+    <section class="featured-recipes">
+        <h2>Featured Recipes</h2>
+        <div class="recipe-cards">
+            {% for recipe in recipes|slice(0, 4) %}
+                <div class="recipe-card">
+                    <h3><a href="{{ path('admin.recipe.show', {id: recipe.getId, slug: recipe.getSlug}) }}">{{ recipe.getTitle }}</a></h3>
+                    <div class="details">
+                        <span>Category: {{ recipe.getCategory.getName }}</span><br>
+                        <span>Created At: {{ recipe.getCreatedAt|date('Y-m-d H:i') }}</span>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <a href="{{ path('admin.recipe.index') }}" class="view-more-button">View More</a>
+    </section>
+
+    <section class="site-description">
+        <h2>About Us</h2>
+        <p>We are passionate about cooking and sharing our best recipes with you. Whether you're looking for healthy meals, delicious desserts, or quick snacks, we have something for everyone. Our site offers a wide range of recipes categorized to make your search easier. Discover new recipes, try them out, and share your experience with us. Enjoy cooking with Ringo!</p>
+    </section>
+{% endblock %}

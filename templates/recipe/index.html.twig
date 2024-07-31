@@ -1,0 +1,133 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recettes{% endblock %}
+
+{% block body %}
+    <style>
+        .example-wrapper {
+            margin: 80px auto 0 auto;
+            max-width: 1500px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .example-wrapper h1 {
+            text-align: center;
+            color: #ff6f61;
+            margin-bottom: 1em;
+        }
+        .recipe-card {
+            display: flex;
+            flex-direction: column;
+            background: #f9f9f9;
+            padding: 15px;
+            margin: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: calc(25% - 20px); /* 4 max recipes in line*/
+            box-sizing: border-box;
+        }
+        .recipe-image {
+            width: 100%;
+            height: 250px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            object-fit: cover;
+        }
+        .recipe-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ff6f61;
+            text-decoration: none;
+            margin-bottom: 10px;
+        }
+        .recipe-title:hover {
+            color: #ff5733;
+        }
+        .recipe-details {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        .recipe-category {
+            font-size: 14px;
+            color: #007bff;
+            font-weight: bold;
+        }
+        .recipe-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .pagination a,
+        .pagination span {
+            padding: 10px 15px;
+            border-radius: 5px;
+            background: #ff6f61;
+            color: #fff;
+            text-decoration: none;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .pagination a:hover,
+        .pagination span:hover {
+            background: #ff5733;
+            color: black;
+        }
+        .pagination .current,
+        .pagination .disabled {
+            background: #ff6f61;
+            color: #fff;
+            cursor: default;
+        }
+        .pagination .current:hover,
+        .pagination .disabled:hover {
+            background: #ff6f61;
+            color: #fff;
+        }
+        .pagination .prev,
+        .pagination .next {
+            background: none;
+            color: #fff;
+            border: 1px solid #ff6f61;
+        }
+        .pagination .prev:hover,
+        .pagination .next:hover {
+            background: #ff6f61;
+            color: #fff;
+        }
+    </style>
+
+    <div class="example-wrapper">
+        <h1>List of Recipes! ✅</h1>
+        <div class="recipe-grid">
+            {% for recipe in recipes %}
+                <a class="recipe-title" href="{{ path('recipe.show', {id: recipe.getId, slug: recipe.getSlug}) }}">
+                    <div class="recipe-card">
+                        <img class="recipe-image" src="{{ recipe.thumbnail ? '/images/recipes/' ~ recipe.thumbnail : '/images/default.png' }}" alt="{{ recipe.title }}">
+                        <a class="recipe-title" href="{{ path('recipe.show', {id: recipe.getId, slug: recipe.getSlug}) }}">{{ recipe.getTitle }}</a>
+                        <div class="recipe-details">
+                            <span>Created At: {{ recipe.getCreatedAt|date('Y-m-d H:i') }}</span> |
+                            <span>Duration: {{ recipe.getDuration }} mins</span>
+                        </div>
+                        <div class="recipe-category">
+                            <span>Category: {{ recipe.getCategory.getName | default('none')}}</span>
+                        </div>
+                    </div>
+                </a>
+            {% else %}
+                <p>No recipes found</p>
+            {% endfor %}
+        </div>
+        {{ knp_pagination_render(recipes) }}
+    </div>
+{% endblock %}

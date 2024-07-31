@@ -1,0 +1,393 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home Page{% endblock %}
+
+{% block body %}
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+        }
+        .hero {
+            position: relative;
+            background-image: url('{{ asset('images/banner.jpeg') }}');
+            background-size: cover;
+            background-position: center;
+            height: 900px;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 55px 0 20px 0;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        .hero-content {
+            position: relative;
+            text-align: center;
+            z-index: 1;
+        }
+        .hero h1 {
+            font-size: 48px;
+            font-family: 'Georgia', serif;
+            font-weight: bold;
+        }
+        .hero p {
+            font-size: 24px;
+            margin: 10px 0;
+        }
+        .button {
+            display: inline-block;
+            margin: 20px auto;
+            padding: 15px 30px;
+            background-color: #ff6f61;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .button:hover {
+            background-color: #ff5733;
+        }
+        .view-more-button {
+            display: block;
+            width: fit-content;
+            margin: 20px auto 40px;
+            padding: 15px 30px;
+            background-color: #ff6f61;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .view-more-button:hover {
+            background-color: #ff5733;
+        }
+        h2 {
+            font-size: 30px;
+            text-align: center;
+            font-family: serif;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .site-description{
+            max-width: 100%;
+            margin: 0 auto;
+            text-align: center;
+            padding: 20px;
+            background-color: #f5f2f2;
+        }
+        .description-content,
+        .contact-section .contact-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .site-description .description-content p,
+        .contact-section .contact-content p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        .contact-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background-color: #ff6f61;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .contact-button:hover {
+            background-color: #ff5733;
+        }
+        .recipe-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        .recipe-card {
+            flex: 0 1 calc(16% - 10px);
+            margin: 10px;
+            padding: 10px;
+            background: #fff;
+            border: 1px solid #f0f0f0;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .recipe-card h3 a {
+            text-decoration: none;
+            color: #ff6f61;
+            font-weight: bold;
+            display: block;
+            margin: 10px 0;
+        }
+        .recipe-card .details {
+            font-size: 16px;
+            color: #555;
+        }
+        .recipe-card img {
+            width: 100%;
+            height: 250px;
+            border-radius: 10px;
+        }
+        .site-description p {
+            font-size: 20px;
+            line-height: 1.5;
+            text-align: center;
+            padding: 40px;
+            margin: 20px auto;
+            max-width: 100%;
+        }
+
+        .how-it-works {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 40px;
+            background-color: #f5f2f2;
+        }
+        .how-it-works-title {
+            flex: 1 1 45%;
+            text-align: center;
+            padding-top: 200px;
+        }
+        .how-it-works-title h2{
+            font-size: 60px;
+        }
+        .how-it-works-steps {
+            flex: 1 1 45%;
+            padding: 10px;
+            border-left: 2px solid #ff6f61;
+        }
+        .step {
+            margin: 20px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+        .step::before {
+            content: attr(data-step);
+            position: absolute;
+            left: -30px;
+            top: 0;
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff6f61;
+            background: #fff;
+            border: 2px solid #ff6f61;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .step p {
+            margin: 0;
+            font-size: 18px;
+            line-height: 1.6;
+            color: #333;
+        }
+        .step strong {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 20px;
+            color: #ff6f61;
+        }
+
+        .featured-chefs {
+            text-align: center;
+        }
+        .chef-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+        .chef-card {
+            flex: 0 1 calc(19% - 20px);
+            margin: 10px;
+            padding: 15px;
+            background: #fff;
+            border: 1px solid #f0f0f0;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .chef-card img {
+            width: 100%;
+            height: 200px;
+            border-radius: 10px;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+        .chef-card h3 {
+            font-size: 22px;
+            color: #ff6f61;
+            margin: 10px 0;
+        }
+        .chef-card .details {
+            font-size: 16px;
+            color: #555;
+        }
+
+        .category-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+        .category-card {
+            flex: 0 1 calc(19% - 20px);
+            margin: 10px;
+            padding: 15px;
+            background: #fff;
+            border: 1px solid #f0f0f0;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .category-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+        .category-card h3 {
+            font-size: 22px;
+            color: #ff6f61;
+            margin: 10px 0;
+        }
+        .category-card .details {
+            font-size: 16px;
+            color: #555;
+        }
+    </style>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Welcome to Ringo</h1>
+            <p>Your go-to place for amazing recipes. Share your own recipes and discover new ones!</p>
+            <a href="{{ path('recipe.index') }}" class="button">Explore Recipes</a>
+            <p>Total duration of all recipes on this website: <b>{{ total }} mins</b></p>
+        </div>
+    </section>
+
+    <section class="categories">
+        <h2>Recipe Categories</h2>
+        <div class="category-cards">
+            {% for category in categories|slice(0, 5) %}
+                <div class="category-card">
+                    <img src="{{ asset('images/category.png') }}" alt="{{ category.category.getName }}">
+                    <h3>{{ category.category.getName }}</h3>
+                    <div class="details">
+                        <span>Total Recipes: {{ category.total | default(0) }}</span>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="latest-recipes">
+        <h2>Latest Recipes</h2>
+        <div class="recipe-cards">
+            {% for recipe in recipes|slice(0, 10) %}
+                <a href="{{ path('recipe.show', {id: recipe.getId, slug: recipe.getSlug}) }}">
+                    <div class="recipe-card">
+                        <img src="{{ recipe.thumbnail ? '/images/recipes/' ~ recipe.thumbnail : '/images/default.png' }}" alt="{{ recipe.getTitle }}">
+                        <h3><a href="{{ path('recipe.show', {id: recipe.getId, slug: recipe.getSlug}) }}">{{ recipe.getTitle }}</a></h3>
+                        <div class="details">
+                            <span>Category: {{ recipe.getCategory.getName }}</span><br>
+                            <span>Created At: {{ recipe.getCreatedAt|date('Y-m-d H:i') }}</span>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+        <a href="{{ path('recipe.index') }}" class="view-more-button">View More</a>
+    </section>
+
+    <section class="how-it-works">
+        <div class="how-it-works-title">
+            <h2>How It Works</h2>
+        </div>
+        <div class="how-it-works-steps">
+            <div class="step" data-step="1">
+                <strong>Sign Up</strong>
+                <p>Create a free account to get started. Customize your profile and set your culinary preferences.</p>
+            </div>
+            <div class="step" data-step="2">
+                <strong>Discover New Recipes</strong>
+                <p>Browse recipes shared by other users. Use our advanced search filters to find exactly what you're looking for.</p>
+            </div>
+            <div class="step" data-step="3">
+                <strong>Share Your Recipes</strong>
+                <p>Upload your favorite recipes, including ingredients, steps, and photos. Tag them by category and cuisine type to help others find them easily.</p>
+            </div>
+            <div class="step" data-step="4">
+                <strong>Engage with the Community</strong>
+                <p>Comment on and rate recipes you try. Follow other users to stay updated with their latest posts.</p>
+            </div>
+            <div class="step" data-step="5">
+                <strong>Participate in Challenges</strong>
+                <p>Join our cooking challenges and contests to showcase your skills and win exciting prizes.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="featured-chefs">
+        <h2>Featured Users</h2>
+        <p>Meet some of our contributors who share their amazing culinary creations with the Ringo community.</p>
+        <div class="chef-cards">
+            {% for user in users|slice(0, 5) %}
+                <div class="chef-card">
+                    <img src="{{ user.thumbnail ? '/images/recipes/' ~ user.thumbnail : '/images/pp.jpeg' }}" alt="{{ user.getUsername }}">
+                    <h3>{{ user.getUsername }}</h3>
+                    <div class="details">
+                        <span>Email: {{ user.getEmail }}</span><br>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="site-description">
+        <div class="description-content">
+            <h2>About Us</h2>
+            <p>
+                Welcome to Ringo, your culinary haven! Our mission is to connect passionate cooks and food enthusiasts from around the world.
+                Whether you're a seasoned chef or just starting your culinary journey, Ringo offers a platform for you to share your recipes, discover new dishes, and connect with a community that loves food as much as you do.
+            </p>
+            <p>
+                Our site features a diverse collection of recipes, from healthy meals and decadent desserts to quick snacks and gourmet dishes. Each recipe is carefully categorized to make your search easier. Join us, share your creations, and enjoy the world of cooking with Ringo!
+            </p>
+        </div>
+    </section>
+
+    <section class="contact-section">
+        <div class="contact-content">
+            <h2>Contact Us</h2>
+            <p>
+                Have questions or suggestions? We'd love to hear from you! Whether you need support, have feedback, or just want to share your thoughts, feel free to reach out. Our team is here to help and ensure you have the best experience with Ringo.
+            </p>
+            <a href="{{ path('contact') }}" class="contact-button">Get in Touch</a>
+        </div>
+    </section>
+{% endblock %}

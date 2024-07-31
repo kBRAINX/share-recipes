@@ -1,0 +1,59 @@
+.navbar {
+    background-color: #343a40;
+}
+
+.navbar-nav .nav-link {
+    color: #fff;
+    margin-right: 15px;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.navbar-nav .nav-link.active {
+    color: #ff6f61;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.5)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Responsive Styles */
+
+@media(max-width: 1200px) {
+    .category-card, .recipe-card, .chef-card {
+        width: calc(34% - 20px);
+    }
+}
+@media(max-width: 768px) {
+    .category-card, .recipe-card, .chef-card {
+        width: calc(50% - 20px);
+    }
+
+    .how-it-works-steps {
+        flex-direction: column;
+    }
+}
+@media(max-width: 576px) {
+    .category-card, .recipe-card, .chef-card {
+        width: calc(100% - 20px);
+    }
+}

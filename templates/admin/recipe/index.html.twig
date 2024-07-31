@@ -1,0 +1,186 @@
+{% extends 'admin/admin.html.twig' %}
+
+{% block title %}Recettes{% endblock %}
+
+{% block body %}
+    <style>
+        .recipe-list-wrapper {
+            margin: 1em auto;
+            max-width: 1500px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .recipe-list-wrapper h1 {
+            text-align: center;
+            color: #ff6f61;
+        }
+        .recipe-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .recipe-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 23%;
+            margin: 1%;
+            background: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .recipe-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-bottom: 1px solid #ddd;
+        }
+        .recipe-content {
+            padding: 20px;
+            flex: 1;
+        }
+        .recipe-title {
+            font-size: 1.5em;
+            color: #ff6f61;
+            text-decoration: none;
+            margin-bottom: 10px;
+        }
+        .recipe-title:hover {
+            text-decoration: underline;
+            color: #ff5733;
+        }
+        .recipe-details {
+            margin: 10px 0;
+            font-size: 14px;
+            color: #555;
+        }
+        .recipe-category {
+            font-size: 14px;
+            color: #007bff;
+            font-weight: bold;
+        }
+        .recipe-actions {
+            display: flex;
+            justify-content: center;
+            gap: 200px;
+            padding: 10px;
+        }
+        .recipe-actions a {
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        .recipe-actions svg {
+            width: 30px;
+            height: 30px;
+            fill: #ff6f61;
+        }
+        .recipe-actions svg:hover {
+            fill: #ff5733;
+        }
+        .new-recipe-button {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            background-color: #ff6f61;
+            color: #fff;
+            border: none;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 18px;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .new-recipe-button:hover {
+            background-color: #ff5733;
+            color: black;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .pagination a,
+        .pagination span {
+            padding: 10px 15px;
+            border-radius: 5px;
+            background: #ff6f61;
+            color: #fff;
+            text-decoration: none;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .pagination a:hover,
+        .pagination span:hover {
+            background: #ff5733;
+            color: black;
+        }
+        .pagination .current,
+        .pagination .disabled {
+            background: #ff6f61;
+            color: #fff;
+            cursor: default;
+        }
+        .pagination .current:hover,
+        .pagination .disabled:hover {
+            background: #ff6f61;
+            color: #fff;
+        }
+        .pagination .prev,
+        .pagination .next {
+            background: none;
+            color: #fff;
+            border: 1px solid #ff6f61;
+        }
+        .pagination .prev:hover,
+        .pagination .next:hover {
+            background: #ff6f61;
+            color: #fff;
+        }
+    </style>
+
+    <div class="recipe-list-wrapper">
+        <h1>List of Recipes! ✅</h1>
+        <a href="{{ path('admin.recipe.create') }}" class="new-recipe-button">New Recipe</a>
+        <div class="recipe-cards">
+            {% for recipe in recipes %}
+                <a class="recipe-title" href="{{ path('admin.recipe.show', {id: recipe.getId, slug: recipe.getSlug}) }}">
+                    <div class="recipe-card">
+                        <img src="{{ recipe.thumbnail ? '/images/recipes/' ~ recipe.thumbnail : '/images/default.png' }}" alt="{{ recipe.getTitle }}">
+                        <div class="recipe-content">
+                            <a class="recipe-title" href="{{ path('admin.recipe.show', {id: recipe.getId, slug: recipe.getSlug}) }}">{{ recipe.getTitle }}</a>
+                            <div class="recipe-details">
+                                <span>Created At: {{ recipe.getCreatedAt|date('Y-m-d H:i') }}</span><br>
+                                <span>Duration: {{ recipe.getDuration }} mins</span>
+                            </div>
+                            <div class="recipe-category">
+                                <span>Category: {{ recipe.getCategory.getName | default('none')}}</span>
+                            </div>
+                        </div>
+                        <div class="recipe-actions">
+                            <a href="{{ path('admin.recipe.edit', {id: recipe.getId}) }}">
+                                <svg viewBox="0 0 24 24" >
+                                    <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zm2.92-2.92l7.06-7.06 1.75 1.75-7.06 7.06H5.92v-1.75H3v1.75h1.75v1.75h1.75v-1.75H8.42V15h-1.75v-1.75h-1.75v1.75h-1.75v-1.75H5.92z"></path>
+                                </svg>
+                            </a>
+                            <a href="{{ path('admin.recipe.delete', {id: recipe.getId}) }}">
+                                <svg viewBox="0 0 24 24" >
+                                    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2-10h8v10H8V9zm7.5-5l-1-1h-5l-1 1H5v2h14V4h-3.5z"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </a>
+            {% else %}
+                <div>No recipes found</div>
+            {% endfor %}
+        </div>
+        {{ knp_pagination_render(recipes) }}
+    </div>
+{% endblock %}
